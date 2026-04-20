@@ -1,0 +1,18 @@
+{
+  "enchantment.apple_enchantment.infusing": "Infusing",
+  "enchantment.apple_enchantment.infusing.desc": "Converts golden apples into enchanted golden apples when enchanting.",
+  "enchantment.apple_enchantment.amplification": "Amplification",
+  "enchantment.apple_enchantment.amplification.desc": "Increases the duration and level of potion effects from enchanted golden apples.",
+  "enchantment.apple_enchantment.energetic": "Energetic",
+  "enchantment.apple_enchantment.energetic.desc": "Grants Strength, Speed, and Haste when consuming enchanted golden apples.",
+  "enchantment.apple_enchantment.glint": "Glint",
+  "enchantment.apple_enchantment.glint.desc": "Grants Night Vision and Glowing when consuming enchanted golden apples.",
+  "enchantment.apple_enchantment.bountiful": "Bountiful",
+  "enchantment.apple_enchantment.bountiful.desc": "Increases the food and saturation restored by enchanted golden apples.",
+  "enchantment.apple_enchantment.bane_of_eden": "Bane of Eden",
+  "enchantment.apple_enchantment.bane_of_eden.desc": "Applies Hunger and Nausea when consuming enchanted golden apples.",
+  "advancements.apple_enchantment.aura_of_gold.title": "§5§lAura of Gold",
+  "advancements.apple_enchantment.aura_of_gold.desc": "§dGolden light brushes fingertips, mortal things reforged into miracles",
+  "advancements.apple_enchantment.overpowered.title": "§5§lOverpowered",
+  "advancements.apple_enchantment.overpowered.desc": "§6Eat a golden apple after enchanting it"
+}

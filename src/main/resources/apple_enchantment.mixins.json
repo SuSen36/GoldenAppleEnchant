@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "compatibilityLevel": "JAVA_17",
+  "package": "com.susen36.apple_enchantment.mixin",
+  "mixins": [
+    "EnchantedGoldenAppleItemMixin",
+    "FoodDataMixin",
+    "ItemMixin",
+    "LivingEntityMixin"
+  ],
+  "client": [
+  ],
+  "refmap": "apple_enchantment.mixins.refmap.json"
+}

@@ -1,0 +1,23 @@
+{
+  "parent": "apple_enchantment:aura_of_gold",
+  "display": {
+    "icon": {
+      "item": "minecraft:golden_apple"
+    },
+    "title": {
+      "translate": "advancements.apple_enchantment.overpowered.title"
+    },
+    "description": {
+      "translate": "advancements.apple_enchantment.overpowered.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}
