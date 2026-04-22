@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:adventure/root",
+  "parent": "minecraft:story/enchant_item",
   "display": {
     "icon": {
       "item": "minecraft:golden_apple"

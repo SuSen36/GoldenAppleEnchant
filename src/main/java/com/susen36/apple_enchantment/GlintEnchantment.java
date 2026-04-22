@@ -16,7 +16,7 @@ public class GlintEnchantment extends Enchantment {
 
     @Override
     public int getMaxCost(int level) {
-        return this.getMinCost(level)  * 15;
+        return this.getMinCost(level) + 15;
     }
 
     @Override
