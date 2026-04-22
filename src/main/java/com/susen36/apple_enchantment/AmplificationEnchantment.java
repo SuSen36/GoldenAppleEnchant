@@ -2,7 +2,6 @@ package com.susen36.apple_enchantment;
 
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 public class AmplificationEnchantment extends Enchantment {
 
@@ -17,7 +16,7 @@ public class AmplificationEnchantment extends Enchantment {
 
     @Override
     public int getMaxCost(int level) {
-        return super.getMinCost(level) + 25;
+        return super.getMinCost(level) + 15;
     }
 
     @Override

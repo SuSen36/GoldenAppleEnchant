@@ -2,7 +2,6 @@ package com.susen36.apple_enchantment;
 
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 public class GlintEnchantment extends Enchantment {
 
@@ -12,12 +11,12 @@ public class GlintEnchantment extends Enchantment {
 
     @Override
     public int getMinCost(int level) {
-        return 20 + (level - 1) * 10;
+        return 5 + (level - 1) * 10;
     }
 
     @Override
     public int getMaxCost(int level) {
-        return super.getMinCost(level) + level * 25;
+        return this.getMinCost(level)  * 15;
     }
 
     @Override

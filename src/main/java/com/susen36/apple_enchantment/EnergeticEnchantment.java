@@ -3,7 +3,6 @@ package com.susen36.apple_enchantment;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 public class EnergeticEnchantment extends Enchantment {
 
@@ -13,17 +12,12 @@ public class EnergeticEnchantment extends Enchantment {
 
     @Override
     public int getMinCost(int level) {
-        return 25;
+        return 15;
     }
 
     @Override
     public int getMaxCost(int level) {
-        return 40;
-    }
-
-    @Override
-    public boolean isCurse() {
-        return true;
+        return 30;
     }
 
     @Override
@@ -33,7 +27,7 @@ public class EnergeticEnchantment extends Enchantment {
 
     @Override
     public boolean isTradeable() {
-        return false;
+        return true;
     }
 
     @Override

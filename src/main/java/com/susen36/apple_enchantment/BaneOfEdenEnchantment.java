@@ -2,7 +2,6 @@ package com.susen36.apple_enchantment;
 
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 public class BaneOfEdenEnchantment extends Enchantment {
 
@@ -12,12 +11,12 @@ public class BaneOfEdenEnchantment extends Enchantment {
 
     @Override
     public int getMinCost(int level) {
-        return 30;
+        return 8;
     }
 
     @Override
     public int getMaxCost(int level) {
-        return 50;
+        return 15;
     }
 
     @Override
@@ -26,13 +25,13 @@ public class BaneOfEdenEnchantment extends Enchantment {
     }
 
     @Override
-    public boolean isTreasureOnly() {
+    public boolean isCurse() {
         return true;
     }
 
     @Override
-    public boolean isTradeable() {
-        return false;
+    public boolean isTreasureOnly() {
+        return true;
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.susen36.apple_enchantment.mixin;
 
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.EnchantedGoldenAppleItem;
 import net.minecraft.world.item.Vanishable;
 import org.spongepowered.asm.mixin.Mixin;

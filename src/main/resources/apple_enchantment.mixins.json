@@ -5,8 +5,9 @@
   "package": "com.susen36.apple_enchantment.mixin",
   "mixins": [
     "EnchantedGoldenAppleItemMixin",
-    "FoodDataMixin",
+    "EnchantmentMenuMixin",
     "ItemMixin",
+    "ItemStackMixin",
     "LivingEntityMixin"
   ],
   "client": [
