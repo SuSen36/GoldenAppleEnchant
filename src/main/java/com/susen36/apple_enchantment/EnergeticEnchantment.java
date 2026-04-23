@@ -1,13 +1,12 @@
 package com.susen36.apple_enchantment;
 
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 public class EnergeticEnchantment extends Enchantment {
 
     public EnergeticEnchantment() {
-        super(Rarity.UNCOMMON, AppleEnchantments.ENCHANTED_APPLE, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
+        super(Rarity.RARE, AppleEnchantments.ENCHANTED_APPLE, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
     }
 
     @Override
@@ -18,11 +17,6 @@ public class EnergeticEnchantment extends Enchantment {
     @Override
     public int getMaxCost(int level) {
         return 30;
-    }
-
-    @Override
-    public boolean canApplyAtEnchantingTable(ItemStack stack) {
-        return false;
     }
 
     @Override

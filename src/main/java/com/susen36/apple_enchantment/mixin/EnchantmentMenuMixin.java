@@ -1,22 +1,22 @@
 package com.susen36.apple_enchantment.mixin;
 
 import com.susen36.apple_enchantment.AppleEnchantments;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
-import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.EnchantmentMenu;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.item.Items;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.function.BiConsumer;
 import java.util.stream.IntStream;
 
-@Mixin(EnchantmentMenu.class)
+@Mixin(value = EnchantmentMenu.class,remap = false)
 public abstract class EnchantmentMenuMixin {
 
     @Final
@@ -27,22 +27,40 @@ public abstract class EnchantmentMenuMixin {
     @Shadow
     public int[] enchantClue;
 
-    @Redirect(
-            method = "slotsChanged",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/world/inventory/ContainerLevelAccess;execute(Ljava/util/function/BiConsumer;)V"
-            )
-    )
-    private void redirectExecute(ContainerLevelAccess instance, BiConsumer<Level, BlockPos> consumer) {
-        instance.execute(consumer);
+    @Shadow @Final private Container enchantSlots;
 
-        // instance执行后，过滤重复的注魔附魔
+    @Shadow
+    public abstract void slotsChanged(Container p_39461_);
+
+    @Final
+    @Shadow private DataSlot enchantmentSeed;
+
+    @Unique
+    private boolean appleEnchantment$isRefreshing = false;
+
+    @Inject(method = "slotsChanged", at = @At("TAIL"))
+    private void injectSlotsChanged(Container container, CallbackInfo ci) {
+        if (this.enchantSlots.isEmpty() || !this.enchantSlots.getItem(0).is(Items.GOLDEN_APPLE)) {
+            return;
+        }
+
+        if (this.appleEnchantment$isRefreshing) {
+            return;
+        }
+
         int infusingEnchantmentId = Registry.ENCHANTMENT.getId(AppleEnchantments.INFUSING.get());
 
         int[] infusingSlots = IntStream.range(0, 3)
                 .filter(slotIndex -> this.enchantClue[slotIndex] == infusingEnchantmentId)
                 .toArray();
+
+        if (infusingSlots.length == 0) {
+            this.appleEnchantment$isRefreshing = true;
+            this.enchantmentSeed.set(this.enchantmentSeed.get() + 1);
+            this.slotsChanged(container);
+            this.appleEnchantment$isRefreshing = false;
+            return;
+        }
 
         if (infusingSlots.length > 1) {
             int slotWithLowestCost = IntStream.of(infusingSlots)
@@ -52,14 +70,6 @@ public abstract class EnchantmentMenuMixin {
             IntStream.of(infusingSlots)
                     .filter(slotIndex -> slotIndex != slotWithLowestCost)
                     .forEach(slotIndex -> this.enchantClue[slotIndex] = -1);
-
-            // 再次广播，将过滤后的数据同步到客户端
-            this.getSlef().broadcastChanges();
         }
-    }
-
-    @Unique
-    private EnchantmentMenu getSlef(){
-        return (EnchantmentMenu)(Object)this;
     }
 }

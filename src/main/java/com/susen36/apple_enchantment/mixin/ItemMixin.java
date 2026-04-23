@@ -4,6 +4,8 @@ import com.mojang.datafixers.util.Pair;
 import com.susen36.apple_enchantment.AppleEnchantment;
 import com.susen36.apple_enchantment.AppleEnchantments;
 import net.minecraft.advancements.Advancement;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
@@ -31,9 +33,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Mixin(value = Item.class)
 public abstract class ItemMixin implements IForgeItem {
@@ -54,14 +54,13 @@ public abstract class ItemMixin implements IForgeItem {
             if (container != null && stack.getItem() == Items.GOLDEN_APPLE
                     && stack.getEnchantmentLevel(AppleEnchantments.INFUSING.get()) > 0) {
 
-                ItemStack result = new ItemStack(Items.ENCHANTED_GOLDEN_APPLE, stack.getCount());
+                ItemStack itemStack = new ItemStack(Items.ENCHANTED_GOLDEN_APPLE, stack.getCount());
 
-                if (stack.hasTag() && stack.getTag() != null) {
-                    result.setTag(stack.getTag().copy());
+                if (stack.getTag() != null && stack.hasTag()) {
+                    itemStack.setTag(stack.getTag().copy());
                 }
-
-                removeSpecificEnchantment(result, AppleEnchantments.INFUSING.get());
-                container.setItem(slotId, result);
+                transferEnchantmentData(stack, itemStack, AppleEnchantments.INFUSING.get());
+                container.setItem(slotId, itemStack);
 
                 if (entity instanceof ServerPlayer player) {
                     ResourceLocation advId = ResourceLocation.fromNamespaceAndPath(AppleEnchantment.MODID, "aura_of_gold");
@@ -78,13 +77,22 @@ public abstract class ItemMixin implements IForgeItem {
     }
 
     @Unique
-    private static void removeSpecificEnchantment(ItemStack stack, Enchantment enchantmentToRemove) {
-        Map<Enchantment, Integer> currentEnchantments = EnchantmentHelper.getEnchantments(stack);
+    private static void transferEnchantmentData(ItemStack source, ItemStack target, Enchantment enchantmentToRemove) {
+        if (source.hasTag() && source.getTag() != null) {
 
-        if (currentEnchantments.containsKey(enchantmentToRemove)) {
-            Map<Enchantment, Integer> newEnchantments = new HashMap<>(currentEnchantments);
-            newEnchantments.remove(enchantmentToRemove);
-            EnchantmentHelper.setEnchantments(newEnchantments, stack);
+            if (!source.getTag().contains("Enchantments", 9)) return;
+
+            String enchantmentId = EnchantmentHelper.getEnchantmentId(enchantmentToRemove).toString();
+            ListTag filteredList = source.getTag().getList("Enchantments", 10).stream()
+                    .map(nbt -> (CompoundTag) nbt)
+                    .filter(tag -> !tag.getString("id").equals(enchantmentId))
+                    .collect(ListTag::new, ListTag::add, ListTag::addAll);
+
+            if (filteredList.isEmpty()) {
+                target.removeTagKey("Enchantments");
+            } else {
+                target.getOrCreateTag().put("Enchantments", filteredList);
+            }
         }
     }
 
@@ -99,11 +107,10 @@ public abstract class ItemMixin implements IForgeItem {
     @Inject(method = "getEnchantmentValue", at = @At("HEAD"), cancellable = true)
     public void getEnchantmentValue(CallbackInfoReturnable<Integer> cir){
         if (this.getSlef() == Items.GOLDEN_APPLE || this.getSlef() == Items.ENCHANTED_GOLDEN_APPLE) {
-            cir.setReturnValue(5);
+            cir.setReturnValue(10);
             cir.cancel();
         }
     }
-
 
     @Override
     @Nullable

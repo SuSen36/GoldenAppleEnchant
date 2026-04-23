@@ -11,11 +11,11 @@ public class InfusingEnchantment extends Enchantment {
 
     @Override
     public int getMinCost(int level) {
-        return 15;
+        return 10;
     }
 
     @Override
-    public int getMaxCost(int p_45173_) {
+    public int getMaxCost(int level) {
         return 30;
     }
 
