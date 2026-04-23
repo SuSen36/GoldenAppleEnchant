@@ -1,7 +1,6 @@
 {
-    "homepage": "https://github.com/SuSen36/GoldenAppleEnchant",
-    "promotions": {
-        "1.19.2-latest": "1.0.3",
-        "1.19.2-recommended": "1.0.3"
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/golden-apple-enchantments",
+    "promos": {
+        "1.19.2-latest": "1.0.3"
     }
 }

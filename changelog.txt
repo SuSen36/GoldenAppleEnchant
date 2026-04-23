@@ -1,10 +1,20 @@
 Golden Apple Enchantment Changelog
 
+1.0.3
+=====
+- 附魔台Mixin重构：
+  - 新增注魔附魔种子刷新机制，确保注魔附魔必定出现且同时只会出现一个
+  - 仅对普通金苹果生效，不影响附魔金苹果、书和其他物品
+- 优化金苹果转换逻辑：
+  - 改用 NBT 标签直接操作，确保转换后的附魔金苹果可与原版堆叠
+- 提升金苹果和附魔金苹果的附魔价值从 5 到 10
+- 新增版本更新url
+
 1.0.2
 =====
 - 修复金闪闪附魔最大成本计算错误（乘法改为加法）
 - 调整注魔附魔最大成本为30
-- 修改"金苹果光环"成就父级为附魔台附魔进度
+- 修改"浮光跃金"成就父级为附魔台附魔进度
 
 1.0.1
 =====
@@ -12,9 +22,7 @@ Golden Apple Enchantment Changelog
 - 新增ItemStackMixin，对附魔金苹果的附魔列表排序确保堆叠兼容
 - 移除FoodDataMixin，改用ItemMixin的getFoodProperties实现食物属性修改
 - 优化LivingEntityMixin的金苹果转换逻辑
-- 新增Access Transformer配置开放FoodProperties构造函数
 - 更新中英文语言文件
-- 新增项目README文档
 - 新增模组Logo
 
 1.0.0
@@ -31,4 +39,4 @@ Golden Apple Enchantment Changelog
 - 注魔附魔机制：普通金苹果带有注魔附魔时自动转换为附魔金苹果
 - 使用LivingEntityMixin实现物品tick检测转换
 - 使用FoodDataMixin修改食物属性
-- 新增"金苹果光环"和"过度强化"成就
+- 新增"浮光跃金"和"君临天下"成就

@@ -146,26 +146,27 @@ tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
-task generateUpdateJson {
+tasks.register('generateUpdateJson') {
+    inputs.property("mc_version", project.findProperty('minecraft_version') ?: '1.9.2')
     inputs.property("version", project.findProperty('mod_version') ?: '1.0.0')
-    
+
     def outFile = file("${project.rootDir}/update.json")
     outputs.file(outFile)
-    
+
     doLast {
+        def mcVersion = project.findProperty('minecraft_version') ?: '1.19.2'
         def modVersion = project.findProperty('mod_version') ?: '1.0.0'
-        
+
         def json = new JsonBuilder()
         json {
-            homepage "https://github.com/SuSen36/GoldenAppleEnchant"
-            promotions {
-                "1.19.2-latest" modVersion
-                "1.19.2-recommended" modVersion
-            }
+            homepage "https://www.curseforge.com/minecraft/mc-mods/golden-apple-enchantments"
+
+            promos([
+                    ("${mcVersion}-latest"): modVersion
+            ])
         }
-        
+
         outFile.text = json.toPrettyString()
-        println "成功生成 update.json 到根目录"
     }
 }
 
