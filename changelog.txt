@@ -1,5 +1,12 @@
 Golden Apple Enchantment Changelog
 
+1.0.3-hotfix
+=====
+- 紧急修复版本（hotfix）：
+  - 修复Mixin映射失败导致的崩溃问题
+  - 回调金苹果的附魔值属性从10到8
+  - 回调上一个版本添加的的updateJSONURL
+
 1.0.3
 =====
 - 附魔台Mixin重构：

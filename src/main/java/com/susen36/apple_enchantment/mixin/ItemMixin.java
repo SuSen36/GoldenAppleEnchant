@@ -107,7 +107,7 @@ public abstract class ItemMixin implements IForgeItem {
     @Inject(method = "getEnchantmentValue", at = @At("HEAD"), cancellable = true)
     public void getEnchantmentValue(CallbackInfoReturnable<Integer> cir){
         if (this.getSlef() == Items.GOLDEN_APPLE || this.getSlef() == Items.ENCHANTED_GOLDEN_APPLE) {
-            cir.setReturnValue(10);
+            cir.setReturnValue(8);
             cir.cancel();
         }
     }
