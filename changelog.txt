@@ -1,5 +1,10 @@
 Golden Apple Enchantment Changelog
 
+1.0.4
+=====
+- 新增模组配置系统，可通过配置文件修改注魔附魔是否为宝藏附魔（默认可通过附魔台获取）
+- 回调 update.json在1.0.3中对 mods.toml的修改
+
 1.0.3
 =====
 - 附魔台Mixin重构：
