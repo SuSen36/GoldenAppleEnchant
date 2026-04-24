@@ -17,25 +17,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.stream.IntStream;
 
-@Mixin(value = EnchantmentMenu.class,remap = false)
+@Mixin(EnchantmentMenu.class)
 public abstract class EnchantmentMenuMixin {
 
-    @Final
-    @Shadow
-    public int[] costs;
-
-    @Final
-    @Shadow
-    public int[] enchantClue;
-
     @Shadow @Final private Container enchantSlots;
+    @Shadow @Final public int[] enchantClue;
+    @Shadow @Final private DataSlot enchantmentSeed;
 
-    @Shadow
-    public abstract void slotsChanged(Container p_39461_);
+    @Shadow public abstract void slotsChanged(Container p_39461_);
 
-    @Final
-    @Shadow private DataSlot enchantmentSeed;
-
+    @Shadow @Final public int[] costs;
     @Unique
     private boolean appleEnchantment$isRefreshing = false;
 
