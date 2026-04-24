@@ -10,29 +10,51 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
 
-    @Inject(method = "matches(Lnet/minecraft/world/item/ItemStack;)Z", at = @At("HEAD"))
-    private void onMatchesHead(ItemStack other, CallbackInfoReturnable<Boolean> cir) {
-        sortEnchantments(getSlef());
-        sortEnchantments(other);
-    }
+    @Inject(method = "isSameItemSameTags", at = @At("HEAD"), cancellable = true)
+    private static void onIsSameItemSameTags(ItemStack stackA, ItemStack stackB, CallbackInfoReturnable<Boolean> cir) {
+        if (stackA.is(Items.ENCHANTED_GOLDEN_APPLE) && stackB.is(Items.ENCHANTED_GOLDEN_APPLE)) {
+            CompoundTag tagA = stackA.getTag();
+            CompoundTag tagB = stackB.getTag();
 
-    @Unique
-    private static void sortEnchantments(ItemStack itemStack) {
-        if (itemStack == null || !itemStack.is(Items.ENCHANTED_GOLDEN_APPLE)) return;
+            // 两者都没有标签则视为相同
+            if (tagA == null && tagB == null) {
+                cir.setReturnValue(true);
+                return;
+            }
 
-        if (itemStack.getTag() != null && itemStack.hasTag() && itemStack.getTag().contains("Enchantments", 9)) {
-            ListTag list = itemStack.getTag().getList("Enchantments", 10);
-            list.sort(Comparator.comparing(t -> ((CompoundTag) t).getString("id")));
+            if (tagA != null && tagB != null) {
+                // 复制标签并移除附魔列表，比较剩余NBT是否一致
+                CompoundTag copyA = tagA.copy();
+                CompoundTag copyB = tagB.copy();
+
+                copyA.remove("Enchantments");
+                copyB.remove("Enchantments");
+
+                // 剩余NBT一致且附魔集合内容相同（忽略顺序）则允许堆叠
+                if (Objects.equals(copyA, copyB) && getEnchantmentSet(tagA).equals(getEnchantmentSet(tagB))) {
+                    cir.setReturnValue(true);
+                }
+            }
         }
     }
 
+    // 将附魔列表转为Set集合，忽略附魔标签顺序
     @Unique
-    private ItemStack getSlef(){
-        return (ItemStack)(Object)this;
+    private static Set<String> getEnchantmentSet(CompoundTag tag) {
+        Set<String> enchantSet = new HashSet<>();
+        if (tag.contains("Enchantments", 9)) {
+            ListTag list = tag.getList("Enchantments", 10);
+            for (int i = 0; i < list.size(); i++) {
+                enchantSet.add(list.getCompound(i).toString());
+            }
+        }
+        return enchantSet;
     }
 }

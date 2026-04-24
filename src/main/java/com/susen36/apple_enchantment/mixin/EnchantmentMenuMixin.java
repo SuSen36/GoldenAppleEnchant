@@ -2,6 +2,7 @@ package com.susen36.apple_enchantment.mixin;
 
 import com.susen36.apple_enchantment.AppleEnchantments;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.EnchantmentMenu;
@@ -40,15 +41,11 @@ public abstract class EnchantmentMenuMixin {
 
     @Inject(method = "slotsChanged", at = @At("TAIL"))
     private void injectSlotsChanged(Container container, CallbackInfo ci) {
-        if (this.enchantSlots.isEmpty() || !this.enchantSlots.getItem(0).is(Items.GOLDEN_APPLE)) {
+        if (this.enchantSlots.isEmpty() || !this.enchantSlots.getItem(0).is(Items.GOLDEN_APPLE) || this.appleEnchantment$isRefreshing) {
             return;
         }
 
-        if (this.appleEnchantment$isRefreshing) {
-            return;
-        }
-
-        int infusingEnchantmentId = Registry.ENCHANTMENT.getId(AppleEnchantments.INFUSING.get());
+        int infusingEnchantmentId = BuiltInRegistries.ENCHANTMENT.getId(AppleEnchantments.INFUSING.get());
 
         int[] infusingSlots = IntStream.range(0, 3)
                 .filter(slotIndex -> this.enchantClue[slotIndex] == infusingEnchantmentId)

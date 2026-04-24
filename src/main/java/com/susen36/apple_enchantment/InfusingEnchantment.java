@@ -15,12 +15,17 @@ public class InfusingEnchantment extends Enchantment {
     }
 
     @Override
-    public int getMaxCost(int level) {
+    public int getMaxCost(int p_45173_) {
         return 30;
     }
 
     @Override
     public int getMaxLevel() {
         return 1;
+    }
+
+    @Override
+    public boolean isTreasureOnly() {
+        return Config.infusingTreasureOnly;
     }
 }

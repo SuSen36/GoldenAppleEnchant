@@ -1,6 +1,5 @@
 package com.susen36.apple_enchantment;
 
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.EnchantedGoldenAppleItem;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -8,10 +7,6 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Stream;
 
 public class AppleEnchantments {
 
@@ -35,10 +30,5 @@ public class AppleEnchantments {
     public static void handleEnchantmentTypes() {
         APPLE = EnchantmentCategory.create("apple", (item) -> item == Items.GOLDEN_APPLE);
         ENCHANTED_APPLE = EnchantmentCategory.create("enchanted_apple", (item) -> item == Items.ENCHANTED_GOLDEN_APPLE || item instanceof EnchantedGoldenAppleItem);
-
-        List<EnchantmentCategory> list = new ArrayList<>(Stream.of(CreativeModeTab.TAB_FOOD.getEnchantmentCategories()).toList());
-        list.add(APPLE);
-        list.add(ENCHANTED_APPLE);
-        CreativeModeTab.TAB_FOOD.setEnchantmentCategories(list.toArray(new EnchantmentCategory[]{}));
     }
 }

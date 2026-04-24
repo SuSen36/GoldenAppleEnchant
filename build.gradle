@@ -92,9 +92,9 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
-    runtimeOnly fg.deobf("curse.maven:enchantment-descriptions-250419:4277356")
-    runtimeOnly fg.deobf("curse.maven:bookshelf-228525:4556697")
-    runtimeOnly fg.deobf("curse.maven:appleskin-248787:3872808")
+    runtimeOnly fg.deobf("curse.maven:enchantment-descriptions-250419:7612607")
+    runtimeOnly fg.deobf("curse.maven:bookshelf-228525:7612389")
+    runtimeOnly fg.deobf("curse.maven:appleskin-248787:4770828")
 }
 
 tasks.named('processResources', ProcessResources).configure {
@@ -145,29 +145,3 @@ publishing {
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
-
-tasks.register('generateUpdateJson') {
-    inputs.property("mc_version", project.findProperty('minecraft_version') ?: '1.9.2')
-    inputs.property("version", project.findProperty('mod_version') ?: '1.0.0')
-
-    def outFile = file("${project.rootDir}/update.json")
-    outputs.file(outFile)
-
-    doLast {
-        def mcVersion = project.findProperty('minecraft_version') ?: '1.19.2'
-        def modVersion = project.findProperty('mod_version') ?: '1.0.0'
-
-        def json = new JsonBuilder()
-        json {
-            homepage "https://www.curseforge.com/minecraft/mc-mods/golden-apple-enchantments"
-
-            promotions {
-                "${mcVersion}-latest" modVersion
-            }
-        }
-
-        outFile.text = json.toPrettyString()
-    }
-}
-
-processResources.dependsOn generateUpdateJson
