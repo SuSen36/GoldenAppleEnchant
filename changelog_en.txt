@@ -1,0 +1,49 @@
+Golden Apple Enchantment Changelog
+
+1.0.3-hotfix
+===========
+- Emergency hotfix release:
+  - Fixed Mixin mapping failure causing crashes
+  - Reverted golden apple enchantment value from 10 to 8
+  - Restored updateJSONURL that was removed in previous version
+
+1.0.3
+=====
+- EnchantmentMenu Mixin refactoring:
+  - Added infusion enchantment seed refresh mechanism to ensure it always appears in exactly one slot
+  - Only applies to regular golden apples, not enchanted golden apples or other items
+- Optimized golden apple conversion logic:
+  - Uses direct NBT tag manipulation to ensure converted enchanted golden apples can stack with vanilla ones
+- Increased enchantment value of golden apples and enchanted golden apples from 5 to 10
+- Added version update URL
+
+1.0.2
+=====
+- Fixed Glint enchantment maximum cost calculation error (changed from multiplication to addition)
+- Adjusted Infusing enchantment maximum cost to 30
+- Changed "Aura of Gold" achievement parent to enchantment table progress
+
+1.0.1
+=====
+- Added EnchantmentMenu Mixin to filter duplicate infusion enchantment options
+- Added ItemStackMixin to sort enchantment lists for enchanted golden apples to ensure stacking compatibility
+- Removed FoodDataMixin, using ItemMixin's getFoodProperties to modify food properties instead
+- Optimized LivingEntityMixin golden apple conversion logic
+- Updated Chinese and English language files
+- Added mod logo
+
+1.0.0
+=====
+- Initial release
+- Added golden apple enchantment system
+- Added 6 unique apple enchantments:
+  - Bountiful - Increases nutrition and saturation
+  - Energetic - Provides Strength, Speed, and Haste effects
+  - Glint - Provides Night Vision and Glowing effects
+  - Bane of Eden - Negative curse, adds Hunger and Nausea
+  - Amplification - Enhances all potion effect durations and levels
+  - Infusing - Converts regular golden apples to enchanted golden apples
+- Infusion enchantment mechanism: Regular golden apples with Infusing enchantment automatically convert to enchanted golden apples
+- Uses LivingEntityMixin to implement item tick detection and conversion
+- Uses FoodDataMixin to modify food properties
+- Added "Aura of Gold" and "Overpowered" achievements
