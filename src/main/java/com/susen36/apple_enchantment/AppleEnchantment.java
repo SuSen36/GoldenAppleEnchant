@@ -14,6 +14,7 @@ public class AppleEnchantment
     {
         IEventBus modEventBus = context.getModEventBus();
 
+        Config.register();
         AppleEnchantments.handleEnchantmentTypes();
 
         AppleEnchantments.ENCHANTMENTS.register(modEventBus);

@@ -1,5 +1,9 @@
 Golden Apple Enchantment Changelog
 
+1.0.4
+=====
+- Added mod configuration system, allowing to modify whether Infusing enchantment is treasure-only via config file (default: obtainable via enchantment table)
+
 1.0.3-hotfix
 ===========
 - Emergency hotfix release:

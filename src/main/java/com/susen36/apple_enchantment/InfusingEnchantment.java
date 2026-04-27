@@ -23,4 +23,9 @@ public class InfusingEnchantment extends Enchantment {
     public int getMaxLevel() {
         return 1;
     }
+
+    @Override
+    public boolean isTreasureOnly() {
+        return Config.INFUSING_TREASURE_ONLY.get();
+    }
 }

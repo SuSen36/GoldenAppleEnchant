@@ -1,6 +1,7 @@
 package com.susen36.apple_enchantment.mixin;
 
 import com.susen36.apple_enchantment.AppleEnchantments;
+import com.susen36.apple_enchantment.Config;
 import net.minecraft.core.Registry;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.DataSlot;
@@ -40,11 +41,7 @@ public abstract class EnchantmentMenuMixin {
 
     @Inject(method = "slotsChanged", at = @At("TAIL"))
     private void injectSlotsChanged(Container container, CallbackInfo ci) {
-        if (this.enchantSlots.isEmpty() || !this.enchantSlots.getItem(0).is(Items.GOLDEN_APPLE)) {
-            return;
-        }
-
-        if (this.appleEnchantment$isRefreshing) {
+        if (this.appleEnchantment$isRefreshing || this.enchantSlots.isEmpty() || !this.enchantSlots.getItem(0).is(Items.GOLDEN_APPLE) || Config.INFUSING_TREASURE_ONLY.get()) {
             return;
         }
 
