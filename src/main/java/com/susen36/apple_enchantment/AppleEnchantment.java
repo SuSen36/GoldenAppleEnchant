@@ -1,5 +1,6 @@
 package com.susen36.apple_enchantment;
 
+import com.susen36.apple_enchantment.effects.AppleMobEffects;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -18,6 +19,7 @@ public class AppleEnchantment
         AppleEnchantments.handleEnchantmentTypes();
 
         AppleEnchantments.ENCHANTMENTS.register(modEventBus);
+        AppleMobEffects.MOB_EFFECTS.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(this);
     }
 }

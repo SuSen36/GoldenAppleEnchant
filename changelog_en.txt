@@ -1,5 +1,27 @@
 Golden Apple Enchantment Changelog
 
+1.1.0
+=====
+- Added Enchant Absorption enchantment and corresponding potion effect
+- Grindstone golden apple disenchantment system overhaul:
+  - Fixed issue where stacked golden apples only gave experience for one item
+  - Fixed output quantity issue (N apples in single slot → N output, N+N in dual slots → 2N output)
+  - Dual-slot merge rule: same enchantment same level kept, same enchantment different levels take minimum (excess returned as XP), different enchantments removed (XP refunded)
+  - Single-slot: removes all non-curse enchantments
+  - Enchanted golden apples no longer convert to regular golden apples after disenchantment
+  - Golden apples cannot be mixed with regular items in grindstone
+- Anvil batch enchanting feature (EnchantAbsorption + enchanted golden apple only):
+  - Stacked golden apples left + enchanted book right → batch enchant at once (configurable max, default 16, cap 32)
+  - XP cost linear decay: 100% for 1st, 90% for 2nd, ... 50% for 6th and beyond
+  - Only consumes 1 enchanted book
+  - Falls back to vanilla algorithm when exceeding config limit (shows "Too Expensive!")
+- New config option: enchantAbsorptionMaxLevel controls batch enchanting maximum count
+- Fixed stacking compatibility issue between infusion-converted and grindstone-disenchanted golden apples:
+  - Infusion conversion no longer copies entire NBT tag (avoids leftover RepairCost/Damage)
+  - Grindstone disenchantment no longer writes redundant RepairCost:0 tag
+  - Both outputs now produce consistent NBT structure, ensuring proper stacking
+- EnchantAbsorption set as non-discoverable (isDiscoverable=false), only obtainable via enchanted books, anvil, etc.
+
 1.0.4
 =====
 - Added mod configuration system, allowing to modify whether Infusing enchantment is treasure-only via config file (default: obtainable via enchantment table)

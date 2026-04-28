@@ -3,6 +3,8 @@ package com.susen36.apple_enchantment.mixin;
 import com.mojang.datafixers.util.Pair;
 import com.susen36.apple_enchantment.AppleEnchantment;
 import com.susen36.apple_enchantment.AppleEnchantments;
+import com.susen36.apple_enchantment.effects.AppleMobEffects;
+import com.susen36.apple_enchantment.effects.EnchantAbsorptionEffect;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -56,10 +58,21 @@ public abstract class ItemMixin implements IForgeItem {
 
                 ItemStack itemStack = new ItemStack(Items.ENCHANTED_GOLDEN_APPLE, stack.getCount());
 
-                if (stack.getTag() != null && stack.hasTag()) {
-                    itemStack.setTag(stack.getTag().copy());
+                // 只转移除 Infusing 外的其他附魔
+                if (stack.hasTag() && stack.getTag() != null && stack.getTag().contains("Enchantments", 9)) {
+                    String infusingId = EnchantmentHelper.getEnchantmentId(AppleEnchantments.INFUSING.get()).toString();
+                    ListTag filteredList = stack.getTag().getList("Enchantments", 10).stream()
+                            .map(nbt -> (CompoundTag) nbt)
+                            .filter(tag -> !tag.getString("id").equals(infusingId))
+                            .collect(ListTag::new, ListTag::add, ListTag::addAll);
+                    if (!filteredList.isEmpty()) {
+                        itemStack.getOrCreateTag().put("Enchantments", filteredList);
+                    }
                 }
-                transferEnchantmentData(stack, itemStack, AppleEnchantments.INFUSING.get());
+
+                if (stack.hasCustomHoverName()) {
+                    itemStack.setHoverName(stack.getHoverName());
+                }
                 container.setItem(slotId, itemStack);
 
                 if (entity instanceof ServerPlayer player) {
@@ -72,26 +85,6 @@ public abstract class ItemMixin implements IForgeItem {
                 }
 
                 ci.cancel();
-            }
-        }
-    }
-
-    @Unique
-    private static void transferEnchantmentData(ItemStack source, ItemStack target, Enchantment enchantmentToRemove) {
-        if (source.hasTag() && source.getTag() != null) {
-
-            if (!source.getTag().contains("Enchantments", 9)) return;
-
-            String enchantmentId = EnchantmentHelper.getEnchantmentId(enchantmentToRemove).toString();
-            ListTag filteredList = source.getTag().getList("Enchantments", 10).stream()
-                    .map(nbt -> (CompoundTag) nbt)
-                    .filter(tag -> !tag.getString("id").equals(enchantmentId))
-                    .collect(ListTag::new, ListTag::add, ListTag::addAll);
-
-            if (filteredList.isEmpty()) {
-                target.removeTagKey("Enchantments");
-            } else {
-                target.getOrCreateTag().put("Enchantments", filteredList);
             }
         }
     }
@@ -123,8 +116,10 @@ public abstract class ItemMixin implements IForgeItem {
         int glintLevel = stack.getEnchantmentLevel(AppleEnchantments.GLINT.get());
         int baneOfEdenLevel = stack.getEnchantmentLevel(AppleEnchantments.BANE_OF_EDEN.get());
         int ampLevel = stack.getEnchantmentLevel(AppleEnchantments.AMPLIFICATION.get());
+        int infusingLevel = stack.getEnchantmentLevel(AppleEnchantments.INFUSING.get());
+        int absorptionLevel = stack.getEnchantmentLevel(AppleEnchantments.ENCHANT_ABSORPTION.get());
 
-        if (bountifulLevel <= 0 && energeticLevel <= 0 && glintLevel <= 0 && baneOfEdenLevel <= 0 && ampLevel <= 0) {
+        if (bountifulLevel <= 0 && energeticLevel <= 0 && glintLevel <= 0 && baneOfEdenLevel <= 0 && ampLevel <= 0 && infusingLevel <= 0 && absorptionLevel <= 0) {
             return original;
         }
 
@@ -173,6 +168,22 @@ public abstract class ItemMixin implements IForgeItem {
                         return Pair.of(enhanced, pair.getSecond());
                     })
                     .collect(java.util.stream.Collectors.toList());
+        }
+
+        // 附魔吸收 将附魔金苹果上所有附魔转为 EnchantAbsorptionEffect 药水效果
+        if (absorptionLevel > 0) {
+            java.util.Map<Enchantment, Integer> allEnchantments = EnchantmentHelper.getEnchantments(stack);
+            if (!allEnchantments.isEmpty()) {
+                MobEffectInstance baseEffect = new MobEffectInstance(
+                        AppleMobEffects.ENCHANT_ABSORPTION.get(),
+                        6000,
+                        0,
+                        false,
+                        true,
+                        true
+                );
+                effects.add(Pair.of(EnchantAbsorptionEffect.createWithMobEffect(baseEffect, allEnchantments.keySet()), 1.0F));
+            }
         }
 
         return new FoodProperties(

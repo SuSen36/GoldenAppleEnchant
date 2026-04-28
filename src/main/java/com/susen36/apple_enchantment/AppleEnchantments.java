@@ -29,12 +29,14 @@ public class AppleEnchantments {
 
     public static final RegistryObject<Enchantment> BANE_OF_EDEN = ENCHANTMENTS.register("bane_of_eden", BaneOfEdenEnchantment::new);
 
+    public static final RegistryObject<Enchantment> ENCHANT_ABSORPTION = ENCHANTMENTS.register("enchant_absorption", EnchantAbsorptionEnchantment::new);
+
     public static EnchantmentCategory APPLE;
     public static EnchantmentCategory ENCHANTED_APPLE;
 
     public static void handleEnchantmentTypes() {
         APPLE = EnchantmentCategory.create("apple", (item) -> item == Items.GOLDEN_APPLE);
-        ENCHANTED_APPLE = EnchantmentCategory.create("enchanted_apple", (item) -> item == Items.ENCHANTED_GOLDEN_APPLE || item instanceof EnchantedGoldenAppleItem);
+        ENCHANTED_APPLE = EnchantmentCategory.create("enchanted_apple", EnchantedGoldenAppleItem.class::isInstance);
 
         List<EnchantmentCategory> list = new ArrayList<>(Stream.of(CreativeModeTab.TAB_FOOD.getEnchantmentCategories()).toList());
         list.add(APPLE);

@@ -4,11 +4,16 @@
   "compatibilityLevel": "JAVA_17",
   "package": "com.susen36.apple_enchantment.mixin",
   "mixins": [
+    "AnvilMenuMixin",
     "EnchantedGoldenAppleItemMixin",
+    "EnchantmentHelperMixin",
     "EnchantmentMenuMixin",
+    "GrindstoneMenuMixin",
+    "GrindstoneResultSlotMixin",
     "ItemMixin",
     "ItemStackMixin",
-    "LivingEntityMixin"
+    "LivingEntityMixin",
+    "MobEffectInstanceMixin"
   ],
   "client": [
   ],
