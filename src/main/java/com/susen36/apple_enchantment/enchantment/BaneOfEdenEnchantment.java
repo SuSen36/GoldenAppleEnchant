@@ -1,4 +1,4 @@
-package com.susen36.apple_enchantment;
+package com.susen36.apple_enchantment.enchantment;
 
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.enchantment.Enchantment;

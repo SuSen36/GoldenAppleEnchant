@@ -1,7 +1,7 @@
 package com.susen36.apple_enchantment.mixin;
 
 import com.susen36.apple_enchantment.effects.AppleMobEffects;
-import com.susen36.apple_enchantment.effects.EnchantAbsorptionData;
+import com.susen36.apple_enchantment.effects.EnchantAbsorptionEffect;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -30,7 +30,7 @@ public abstract class MobEffectInstanceMixin {
             return;
         }
         Optional<?> fd = self.getFactorData();
-        if (fd.isPresent() && fd.get() instanceof EnchantAbsorptionData data && !data.getEnchantments().isEmpty()) {
+        if (fd.isPresent() && fd.get() instanceof EnchantAbsorptionEffect.EnchantAbsorptionData data && !data.getEnchantments().isEmpty()) {
             if (!tag.contains("FactorCalculationData", 10)) {
                 return;
             }
@@ -62,7 +62,7 @@ public abstract class MobEffectInstanceMixin {
         if (!factorTag.contains("Enchantments", 9)) {
             return optional;
         }
-        EnchantAbsorptionData data = EnchantAbsorptionData.create();
+        EnchantAbsorptionEffect.EnchantAbsorptionData data = new EnchantAbsorptionEffect.EnchantAbsorptionData();
         ListTag list = factorTag.getList("Enchantments", 10);
         for (int i = 0; i < list.size(); i++) {
             CompoundTag entryTag = list.getCompound(i);

@@ -1,4 +1,6 @@
-package com.susen36.apple_enchantment;
+package com.susen36.apple_enchantment.enchantment;
+
+import com.susen36.apple_enchantment.AppleEnchantment;
 
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.EnchantedGoldenAppleItem;

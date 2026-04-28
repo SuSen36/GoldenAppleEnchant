@@ -1,5 +1,6 @@
 package com.susen36.apple_enchantment;
 
+import com.susen36.apple_enchantment.enchantment.AppleEnchantments;
 import com.susen36.apple_enchantment.effects.AppleMobEffects;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;

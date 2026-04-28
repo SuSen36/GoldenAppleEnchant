@@ -24,6 +24,7 @@ public class Config {
         SPEC = BUILDER.build();
     }
 
+    @SuppressWarnings("removal")
     public static void register() {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SPEC);
     }

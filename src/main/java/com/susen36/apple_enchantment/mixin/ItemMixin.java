@@ -2,7 +2,7 @@ package com.susen36.apple_enchantment.mixin;
 
 import com.mojang.datafixers.util.Pair;
 import com.susen36.apple_enchantment.AppleEnchantment;
-import com.susen36.apple_enchantment.AppleEnchantments;
+import com.susen36.apple_enchantment.enchantment.AppleEnchantments;
 import com.susen36.apple_enchantment.effects.AppleMobEffects;
 import com.susen36.apple_enchantment.effects.EnchantAbsorptionEffect;
 import net.minecraft.advancements.Advancement;
@@ -178,12 +178,9 @@ public abstract class ItemMixin implements IForgeItem {
                 MobEffectInstance baseEffect = new MobEffectInstance(
                         AppleMobEffects.ENCHANT_ABSORPTION.get(),
                         6000,
-                        0,
-                        false,
-                        true,
-                        true
+                        absorptionLevel - 1
                 );
-                effects.add(Pair.of(EnchantAbsorptionEffect.createWithEnchantmentsAndLevels(baseEffect, allEnchantments), 1.0F));
+                effects.add(Pair.of(EnchantAbsorptionEffect.createWithEnchantments(baseEffect, allEnchantments), 1.0F));
             }
         }
         return new FoodProperties(

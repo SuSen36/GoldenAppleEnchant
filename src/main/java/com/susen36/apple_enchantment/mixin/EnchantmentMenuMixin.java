@@ -1,6 +1,6 @@
 package com.susen36.apple_enchantment.mixin;
 
-import com.susen36.apple_enchantment.AppleEnchantments;
+import com.susen36.apple_enchantment.enchantment.AppleEnchantments;
 import com.susen36.apple_enchantment.Config;
 import net.minecraft.core.Registry;
 import net.minecraft.world.Container;

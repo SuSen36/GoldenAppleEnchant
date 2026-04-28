@@ -1,8 +1,8 @@
 package com.susen36.apple_enchantment.mixin;
 
-import com.susen36.apple_enchantment.AppleEnchantments;
+import com.susen36.apple_enchantment.enchantment.AppleEnchantments;
 import com.susen36.apple_enchantment.effects.AppleMobEffects;
-import com.susen36.apple_enchantment.effects.EnchantAbsorptionData;
+import com.susen36.apple_enchantment.effects.EnchantAbsorptionEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -26,7 +26,7 @@ public abstract class EnchantmentHelperMixin {
 
             if (effectInstance != null) {
                 Optional<?> factorData = effectInstance.getFactorData();
-                if (factorData.isPresent() && factorData.get() instanceof EnchantAbsorptionData data) {
+                if (factorData.isPresent() && factorData.get() instanceof EnchantAbsorptionEffect.EnchantAbsorptionData data) {
                     Map<Enchantment, Integer> enchantmentMap = data.getEnchantments();
                     if (enchantmentMap.containsKey(enchantment)) {
                         int customLevel = enchantmentMap.get(enchantment);
