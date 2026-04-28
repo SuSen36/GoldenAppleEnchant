@@ -9,13 +9,13 @@
   "enchantment.apple_enchantment.glint.desc": "食用附魔金苹果时获得夜视和发光效果.",
   "enchantment.apple_enchantment.bountiful": "丰食",
   "enchantment.apple_enchantment.bountiful.desc": "增加附魔金苹果恢复的饥饿值和饱和度.",
-  "enchantment.apple_enchantment.bane_of_eden": "伊甸园之殇",
-  "enchantment.apple_enchantment.bane_of_eden.desc": "食用附魔金苹果时受到饥饿和反胃效果.",
   "enchantment.apple_enchantment.enchant_absorption": "附魔吸收",
   "enchantment.apple_enchantment.enchant_absorption.desc": "将附魔金苹果上的附魔转化为药水效果.",
+  "enchantment.apple_enchantment.bane_of_eden": "伊甸园之殇",
+  "enchantment.apple_enchantment.bane_of_eden.desc": "食用附魔金苹果时受到饥饿和反胃效果.",
   "effect.apple_enchantment.enchant_absorption": "附魔吸收",
   "advancements.apple_enchantment.aura_of_gold.title": "§5§l浮光跃金",
   "advancements.apple_enchantment.aura_of_gold.desc": "§d§l附魔一个金苹果",
   "advancements.apple_enchantment.overpowered.title": "§5§l君临天下",
   "advancements.apple_enchantment.overpowered.desc": "§6吃下附魔后的金苹果"
-}
+ }

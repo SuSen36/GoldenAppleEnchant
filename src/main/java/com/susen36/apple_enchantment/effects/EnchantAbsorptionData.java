@@ -4,25 +4,35 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 public class EnchantAbsorptionData extends MobEffectInstance.FactorData {
-    private final Set<Enchantment> enchantments = new HashSet<>();
+    private final Map<Enchantment, Integer> enchantments = new HashMap<>();
 
     public EnchantAbsorptionData(int paddingDuration) {
         super(paddingDuration);
     }
 
     public void addEnchantment(Enchantment enchantment) {
-        enchantments.add(enchantment);
+        enchantments.put(enchantment, 1);
+    }
+
+    public void addEnchantment(Enchantment enchantment, int level) {
+        enchantments.put(enchantment, level);
     }
 
     public void addEnchantments(Collection<Enchantment> enchantments) {
-        this.enchantments.addAll(enchantments);
+        for (Enchantment ench : enchantments) {
+            this.enchantments.put(ench, 1);
+        }
     }
 
-    public Set<Enchantment> getEnchantments() {
+    public void addEnchantments(Map<Enchantment, Integer> enchantments) {
+        this.enchantments.putAll(enchantments);
+    }
+
+    public Map<Enchantment, Integer> getEnchantments() {
         return enchantments;
     }
 

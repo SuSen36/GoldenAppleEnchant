@@ -27,9 +27,9 @@ public class AppleEnchantments {
 
     public static final RegistryObject<Enchantment> BOUNTIFUL = ENCHANTMENTS.register("bountiful", BountifulEnchantment::new);
 
-    public static final RegistryObject<Enchantment> BANE_OF_EDEN = ENCHANTMENTS.register("bane_of_eden", BaneOfEdenEnchantment::new);
-
     public static final RegistryObject<Enchantment> ENCHANT_ABSORPTION = ENCHANTMENTS.register("enchant_absorption", EnchantAbsorptionEnchantment::new);
+
+    public static final RegistryObject<Enchantment> BANE_OF_EDEN = ENCHANTMENTS.register("bane_of_eden", BaneOfEdenEnchantment::new);
 
     public static EnchantmentCategory APPLE;
     public static EnchantmentCategory ENCHANTED_APPLE;

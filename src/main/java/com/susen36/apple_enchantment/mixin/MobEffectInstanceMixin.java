@@ -17,6 +17,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Map;
 import java.util.Optional;
 
 @Mixin(MobEffectInstance.class)
@@ -35,10 +36,11 @@ public abstract class MobEffectInstanceMixin {
             }
             CompoundTag factorTag = tag.getCompound("FactorCalculationData");
             ListTag list = new ListTag();
-            for (Enchantment ench : data.getEnchantments()) {
-                CompoundTag entry = new CompoundTag();
-                entry.putString("id", EnchantmentHelper.getEnchantmentId(ench).toString());
-                list.add(entry);
+            for (Map.Entry<Enchantment, Integer> entry : data.getEnchantments().entrySet()) {
+                CompoundTag entryTag = new CompoundTag();
+                entryTag.putString("id", EnchantmentHelper.getEnchantmentId(entry.getKey()).toString());
+                entryTag.putInt("lvl", entry.getValue());
+                list.add(entryTag);
             }
             factorTag.put("Enchantments", list);
         }
@@ -63,11 +65,13 @@ public abstract class MobEffectInstanceMixin {
         EnchantAbsorptionData data = EnchantAbsorptionData.create();
         ListTag list = factorTag.getList("Enchantments", 10);
         for (int i = 0; i < list.size(); i++) {
-            ResourceLocation id = ResourceLocation.tryParse(list.getCompound(i).getString("id"));
+            CompoundTag entryTag = list.getCompound(i);
+            ResourceLocation id = ResourceLocation.tryParse(entryTag.getString("id"));
             if (id != null) {
                 Enchantment ench = Registry.ENCHANTMENT.get(id);
                 if (ench != null) {
-                    data.addEnchantment(ench);
+                    int level = entryTag.contains("lvl") ? entryTag.getInt("lvl") : 1;
+                    data.addEnchantment(ench, level);
                 }
             }
         }

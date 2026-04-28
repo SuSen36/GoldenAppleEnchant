@@ -92,9 +92,9 @@ public abstract class AnvilMenuMixin {
         }
         int maxBatch = Config.ENCHANT_ABSORPTION_MAX_LEVEL.get();
         // 超过配置上限时使用原版算法（显示过于昂贵）
-        if (stackCount > maxBatch) {
-            return;
-        }
+        //if (stackCount > maxBatch) {
+        //    return;
+        //}
         // 经验线性递减：第1个100%，第2个90%，...，最低50%
         // 总成本 = 单个成本 × sum(每项系数)
         int singleCost = this.cost.get();

@@ -36,6 +36,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Mixin(value = Item.class)
 public abstract class ItemMixin implements IForgeItem {
@@ -172,7 +173,7 @@ public abstract class ItemMixin implements IForgeItem {
 
         // 附魔吸收 将附魔金苹果上所有附魔转为 EnchantAbsorptionEffect 药水效果
         if (absorptionLevel > 0) {
-            java.util.Map<Enchantment, Integer> allEnchantments = EnchantmentHelper.getEnchantments(stack);
+            Map<Enchantment, Integer> allEnchantments = EnchantmentHelper.getEnchantments(stack);
             if (!allEnchantments.isEmpty()) {
                 MobEffectInstance baseEffect = new MobEffectInstance(
                         AppleMobEffects.ENCHANT_ABSORPTION.get(),
@@ -182,10 +183,9 @@ public abstract class ItemMixin implements IForgeItem {
                         true,
                         true
                 );
-                effects.add(Pair.of(EnchantAbsorptionEffect.createWithMobEffect(baseEffect, allEnchantments.keySet()), 1.0F));
+                effects.add(Pair.of(EnchantAbsorptionEffect.createWithEnchantmentsAndLevels(baseEffect, allEnchantments), 1.0F));
             }
         }
-
         return new FoodProperties(
                 finalNutrition,
                 finalSaturation,

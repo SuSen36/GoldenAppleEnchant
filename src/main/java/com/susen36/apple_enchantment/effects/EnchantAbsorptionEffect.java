@@ -3,10 +3,10 @@ package com.susen36.apple_enchantment.effects;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 import java.util.Collection;
+import java.util.Map;
 import java.util.Optional;
 
 public class EnchantAbsorptionEffect extends MobEffect {
@@ -19,12 +19,26 @@ public class EnchantAbsorptionEffect extends MobEffect {
     @Override
     public boolean isDurationEffectTick(int duration, int amplifier) {
         return true;
-
     }
 
     public static MobEffectInstance createWithEnchantments(MobEffectInstance base, Collection<Enchantment> enchantments) {
         EnchantAbsorptionData data = EnchantAbsorptionData.create();
         data.addEnchantments(enchantments);
+        return new MobEffectInstance(
+                AppleMobEffects.ENCHANT_ABSORPTION.get(),
+                base.getDuration(),
+                base.getAmplifier(),
+                base.isAmbient(),
+                base.isVisible(),
+                base.showIcon(),
+                base.hiddenEffect,
+                Optional.of(data)
+        );
+    }
+
+    public static MobEffectInstance createWithEnchantmentsAndLevels(MobEffectInstance base, Map<Enchantment, Integer> enchantmentsWithLevels) {
+        EnchantAbsorptionData data = EnchantAbsorptionData.create();
+        data.addEnchantments(enchantmentsWithLevels);
         return new MobEffectInstance(
                 AppleMobEffects.ENCHANT_ABSORPTION.get(),
                 base.getDuration(),

@@ -33,7 +33,6 @@ public abstract class EnchantmentMenuMixin {
     @Final
     @Shadow private DataSlot enchantmentSeed;
 
-
     @Shadow public abstract void slotsChanged(Container p_39461_);
 
     @Unique
